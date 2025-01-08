@@ -1,0 +1,25 @@
+body {
+    min-height: 100vh;
+    
+  }
+
+  .background-login {
+    background-image: url('/src/assets/svg\ 6.png');
+    background-size: cover;
+    
+    min-height: 75vh; /* O ajusta según tus necesidades */
+  }
+
+  .background-cobrador_vendedor {
+    background-image: url('/src/assets/svg\ 7.png');
+    background-size: cover;
+    
+    min-height: 75vh; /* O ajusta según tus necesidades */
+  }
+
+  .background-Supervisores {
+    background-image: url('/src/assets/svg\ 8.png');
+    background-size: cover;
+    
+    min-height: 75vh; /* O ajusta según tus necesidades */
+  }
