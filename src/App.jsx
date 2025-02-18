@@ -1,4 +1,3 @@
-import { Footer } from './componentes/Footer'
 import { AppRouter } from './rutas/rutas'
 
 
