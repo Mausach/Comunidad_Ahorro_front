@@ -9,6 +9,7 @@ import { starEditarProductos } from '../../Helpers/EditProductos';
 import { habilitarProducto } from '../../Helpers/habilitarProducto';
 
 
+
 export const CardPrestamo = ({ productos, setRefreshData, navigate }) => {
   const {
     nombre,
