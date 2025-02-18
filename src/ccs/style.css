@@ -5,32 +5,6 @@ body {
     
   }
 
-  .background-nav_geren {
-    background-image: url('/src/assets/madera4.jpg');
-    background-size: cover;
-  }
-
-  .background-login {
-    background-image: url('/src/assets/svg\ 12.png');
-    background-size: cover;
-    
-    min-height: 75vh; /* O ajusta según tus necesidades */
-  }
-
-  .background-cobrador_vendedor {
-    background-image: url('/src/assets/svg\ 7.png');
-    background-size: cover;
-    
-    min-height: 75vh; /* O ajusta según tus necesidades */
-  }
-
-  .background-Supervisores {
-    background-image: url('/src/assets/svg\ 8.png');
-    background-size: cover;
-    
-    min-height: 75vh; /* O ajusta según tus necesidades */
-  }
-
   /* Estilos para el Navbar */
 
 
