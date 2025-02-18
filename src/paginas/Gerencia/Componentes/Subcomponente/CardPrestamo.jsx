@@ -3,9 +3,10 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Form, Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
-import { habilitarProducto } from '../../Helpers/habilitarProducto';
+
 import { deshabilitarProducto } from '../../Helpers/DeshabilitarProducto';
 import { starEditarProductos } from '../../Helpers/EditProductos';
+import { habilitarProducto } from '../../Helpers/habilitarProducto';
 
 
 export const CardPrestamo = ({ productos, setRefreshData, navigate }) => {
