@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, ListGroup } from 'react-bootstrap';
-import { ModalEditCliente } from './ModaleDITcLIENTE.JSX';
+import { ModalEditCliente } from './ModalEditCliente';
+
 
 export const TablaClientes = ({ clientes, setRefreshData, navigate }) => {
   const [showModal, setShowModal] = useState(false);
@@ -70,7 +71,7 @@ export const TablaClientes = ({ clientes, setRefreshData, navigate }) => {
       </ListGroup>
 
       {/* Modal de edición */}
-      <ModalEditCliente 
+      <ModalEditCliente
         showModal={showModal} 
         handleCloseModal={handleCloseModal} 
         selectedCliente={selectedCliente} 
