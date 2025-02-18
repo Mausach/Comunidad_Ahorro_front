@@ -3,7 +3,7 @@ import axios from "axios";
 //https://as-sumadre.onrender.com
 
 export const authApi=axios.create({
-    baseURL: "http://localhost:4005",   
+    baseURL: "http://192.168.0.3:4005",   
 });
 
 

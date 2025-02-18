@@ -81,9 +81,7 @@ export const Gerencia = () => {
         </div>;
       case 'Reportes':
         return <div className="content">
-          <h1>
           <GestPeriodoRep navigate={navigate}/>
-          </h1>
         </div>;
       case 'Crear producto o plan':
         return (

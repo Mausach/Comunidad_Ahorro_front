@@ -69,9 +69,9 @@ export const Admin = () => {
           </div>;
       case 'Reportes':
         return <div className="content">
-          <h1>
+          
           <GestPeriodoRep navigate={navigate}/>
-          </h1>
+          
           </div>;
         case 'Notificaciones':
         return <div className="content">

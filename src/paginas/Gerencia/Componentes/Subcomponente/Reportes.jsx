@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import PieChartComponent from './GraficoTOrta';
 
 export const ReporteGeneral = ({ reportes, reportesPrestamos, reportesPlanes, setRefreshData, navigate }) => {
+
     const [mostrarDetalles, setMostrarDetalles] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [showGastoModal, setShowGastoModal] = useState(false); // Estado para el modal de gastos
@@ -225,6 +226,9 @@ export const ReporteGeneral = ({ reportes, reportesPrestamos, reportesPlanes, se
             })}
           </div>
         </Collapse>
+
+     
+    
   
         {/* Modal para registrar gastos */}
         <ModalRegistGasto

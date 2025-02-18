@@ -4,7 +4,10 @@ import { Alert, Button, Col, Container, Row, Spinner } from 'react-bootstrap';
 import { CargarReportes } from '../Helpers/CargarReportes';
 import { ModalCrearPeriodo } from './Subcomponente/ModalCrearPeriodo';
 import { ReporteGeneral } from './Subcomponente/Reportes';
+
 import { CargarProductos } from '../Helpers/Cargarroductos';
+import { CargarRendiciones } from '../Helpers/CargarRendiciones';
+import RendicionList from './Subcomponente/RendicionesCards';
 
 
 export const GestPeriodoRep = ({ navigate, usuario }) => {
@@ -13,9 +16,10 @@ export const GestPeriodoRep = ({ navigate, usuario }) => {
     const [refreshData, setRefreshData] = useState(false);//estado para refrescar
 
     const [reportes, setReportes] = useState([]); //estado para reportes
-     const [productos, setProductos] = useState([]); //estado para tipo de productos planes de diferentes cosas
+    const [rendicion, setRendicion] = useState([]); //para las rendiciones
+    const [productos, setProductos] = useState([]); //estado para tipo de productos planes de diferentes cosas
 
-  
+
 
     // Función para manejar la selección de opciones
     const handleSelection = (option) => {
@@ -26,7 +30,7 @@ export const GestPeriodoRep = ({ navigate, usuario }) => {
         }, 1000); // Simulamos un tiempo de carga de 1 segundo
     };
 
-     
+
 
     useEffect(() => {
         // Animación con GSAP para la entrada del contenido
@@ -39,44 +43,54 @@ export const GestPeriodoRep = ({ navigate, usuario }) => {
         }
     }, [loading, selectedOption]);
 
- useEffect(() => {
-         if (refreshData) {
-             CargarReportes(setReportes, navigate);
-            
-             CargarProductos(setProductos, navigate);
- 
- 
-             setRefreshData(false);
-         } else {
- 
-             CargarReportes(setReportes, navigate);
-            
-             CargarProductos(setProductos, navigate);
-         }
-     }, [refreshData, navigate]);
+    useEffect(() => {
+        if (refreshData) {
+            CargarReportes(setReportes, navigate);
+            CargarProductos(setProductos, navigate);
+            CargarRendiciones(setRendicion, navigate)
+
+            setRefreshData(false);
+        } else {
+
+            CargarReportes(setReportes, navigate);
+            CargarProductos(setProductos, navigate);
+            CargarRendiciones(setRendicion, navigate)
+        }
+    }, [refreshData, navigate]);
 
 
-     const renderContent = () => {
+    const renderContent = () => {
         if (reportes.length === 0 || productos.length === 0) {
             return <Spinner animation="border" />;
         }
-    
+
         // Filtrar reportes según el producto al que pertenecen
         const reportesPrestamos = reportes.filter(reporte => {
             const productoRelacionado = productos.find(producto => producto.nombre === reporte.tipo);
             return productoRelacionado && productoRelacionado.prestamo_bandera; // Solo préstamos
         });
-    
+
         const reportesPlanes = reportes.filter(reporte => {
             const productoRelacionado = productos.find(producto => producto.nombre === reporte.tipo);
             return productoRelacionado && productoRelacionado.plan_bandera; // Solo planes
         });
-    
+
         return (
             <>
+
+                <ReporteGeneral 
+                reportes={reportes}
+                reportesPrestamos={reportesPrestamos}
+                reportesPlanes={reportesPlanes}
                 
-                <ReporteGeneral reportes={reportes} reportesPrestamos={reportesPrestamos} reportesPlanes={reportesPlanes} setRefreshData={setRefreshData} navigate={navigate}/>
-    
+                setRefreshData={setRefreshData} 
+                navigate={navigate} 
+                
+                />
+
+                <RendicionList rendiciones={rendicion} setRefreshData={setRefreshData} 
+                navigate={navigate} />
+
             </>
         );
     };
