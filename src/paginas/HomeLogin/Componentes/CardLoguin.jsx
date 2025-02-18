@@ -7,6 +7,7 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { starLogin } from '../Helpers/StarLogin';
+import Logo from '../../../assets/Logo1-removebg-preview.png'
 
 export const CardLoguin = () => {
     const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar la contraseña
@@ -16,7 +17,7 @@ export const CardLoguin = () => {
 
     // State para usuario e email del usuario
     const [user, setUser] = useState({
-        email: "",
+        email: "", //cambiar a nombreusuario o email
         password: "",
     });
 
@@ -49,19 +50,22 @@ export const CardLoguin = () => {
         } else {
             // Llamar a la función para iniciar sesión (puedes personalizarla)
             starLogin(user.email, user.password, navigate);
-            
+
         }
     };
 
     return (
         <div className="d-flex justify-content-center align-items-center min-vh-100">
             {/* Card centrada con sombra */}
-            <Card style={{ width: '23rem' }} className="shadow-lg">
+            <Card style={{ width: '23rem' }} className="shadow-lg rounded-5">
                 <Card.Body>
                     <Card.Title className='text-center'>
-                        <h1>"NOMBRE"</h1>
+
+                        <div >
+                        <img className="logo img-fluid" style={{ width: '300px', height: '150px', objectFit: 'cover' }} src={Logo} alt="Logo" />
+                        </div>
                     </Card.Title>
-                    <Card.Subtitle className="pt-4 text-muted text-center">
+                    <Card.Subtitle className=" text-muted text-center">
                         Sistema de gestión personalizado
                     </Card.Subtitle>
 
@@ -71,8 +75,10 @@ export const CardLoguin = () => {
                         <Form.Group className="mb-3" controlId="formGroupEmail">
                             <InputGroup>
                                 <Form.Control
-                                    type="email"
-                                    placeholder="Correo Electrónico"
+                                    type="text"
+                                    placeholder="Email o Nombre de Usuario"
+                                    minLength={3}
+                                    maxLength={25}
                                     name="email"
                                     value={user.email}
                                     onChange={onInputChange}
@@ -89,6 +95,8 @@ export const CardLoguin = () => {
                                 <Form.Control
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Contraseña"
+                                    minLength={6}
+                                    maxLength={25}
                                     name="password"
                                     value={user.password}
                                     onChange={onInputChange}
@@ -100,7 +108,7 @@ export const CardLoguin = () => {
                         </Form.Group>
 
                         <Form.Group className="pt-4 d-flex justify-content-center align-items-center">
-                            <Button variant="secondary" type="submit">Ingresar</Button>
+                            <Button variant="primary" type="submit">Ingresar</Button>
                         </Form.Group>
                     </Form>
                 </Card.Body>

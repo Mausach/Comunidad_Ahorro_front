@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CardLoguin } from "./Componentes/CardLoguin";
 import { gsap } from "gsap";
+import Logo from '../../assets/Logo1-removebg-preview.png'
 
 export const HomeLogin = () => {
     const [showWelcome, setShowWelcome] = useState(true); // Estado para controlar la pantalla de bienvenida
@@ -27,12 +28,20 @@ export const HomeLogin = () => {
     }, [showWelcome]);
 
     return (
-        <div className="background-login">
+        <div>
             {showWelcome ? (
                 <div className="welcome-screen d-flex justify-content-center align-items-center min-vh-100">
-                    <h1 className="text-center text-white">
-                        ¡Bienvenido a "NOMBRE DE LA PLATAFORMA"!
+
+
+
+                    <h1 className="text-center text-w">
+
+                        <div className='d-flex justify-content-center align-items-center'>
+                            <img className="logo" style={{ width: '400px' }} src={Logo} alt="Logo" />
+                        </div>
                     </h1>
+
+
                 </div>
             ) : (
                 // Contenido principal después de la bienvenida

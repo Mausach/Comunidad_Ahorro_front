@@ -5,6 +5,9 @@ import { Admin } from '../paginas/Admin/Admin'
 import { Cobrador_vendedor } from '../paginas/Cobrador_Vendedor.jsx/Cobrador_vendedor'
 import { Vendedor } from '../paginas/vendedor/Vendedor'
 import { Supervisores } from '../paginas/Supervision/Supervisores'
+import { Gerencia } from '../paginas/Gerencia/Gerencia'
+import { Creator } from '../paginas/Creator/Creator'
+import { Cobrador } from '../paginas/Cobrador.jsx/Cobrador'
 
 
 
@@ -18,6 +21,9 @@ export const AppRouter = () => {
           <Route path="/cobrador_vendedor" element = {<Cobrador_vendedor/>} />
           <Route path="/vendedor" element = {<Vendedor/>} />
           <Route path="/sup" element = {<Supervisores/>} />
+          <Route path="/gerencia" element = {<Gerencia/>} />
+          <Route path="/creator" element = {<Creator/>} />
+          <Route path="/cobrador" element = {<Cobrador/>} />
   
         </Routes>
       </BrowserRouter>
