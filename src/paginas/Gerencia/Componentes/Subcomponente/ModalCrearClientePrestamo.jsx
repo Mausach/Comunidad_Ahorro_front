@@ -5,9 +5,9 @@ import { starCrearCliente } from '../../Helpers/AltaCliente';
 import { CargarCobradores } from '../../Helpers/CargarCobradores';
 import { starCrearPrestamoCliente } from '../../Helpers/AltaPretamoCliente';
 
-export const ModalCrearClientePrestamo = ({ showCreateModal, handleCloseCreateModal, setRefreshData, navigate, usuario,reporte,cobradores,prestamoNombre }) => {
+export const ModalCrearClientePrestamo = ({ showCreateModal, handleCloseCreateModal, setRefreshData, navigate, usuario, reporte, cobradores, prestamoNombre, tipoCobranza }) => {
 
-console.log(reporte)
+    console.log(reporte)
     const [newUser, setNewUser] = useState({ //usaremos user pero es de clientes esto luego se movera
         apellido: '', // Apellido del cliente
         nombre: '', // Nombre del cliente
@@ -31,19 +31,19 @@ console.log(reporte)
         interes_agregado: 0,
         tipo: '',
         cantidad_tipo: 0,
-    
+
 
         //id de quien manda la venta
-        vendedorId:usuario,
-        cobradorId:0,
-        reporteId:reporte,//cobrador
+        vendedorId: usuario,
+        cobradorId: 0,
+        reporteId: reporte,//cobrador
 
         esNuevoCliente: true,
-        
+
 
     });
 
-    
+
 
 
 
@@ -158,29 +158,29 @@ console.log(reporte)
             nombre_familiar: '', // Nombre de un familiar
             situacion_veraz: 0, // Situación veraz (entero, por defecto 0)
             numero_cliente: '', // Número de cliente único (generado)
-    
+
             //estos datos son del prestamo
             monto_prestado: 0,
             interes_agregado: 0,
             tipo: '',
             cantidad_tipo: 0,
-    
+
             //id de quien manda la venta
-            vendedorId:usuario,
-            cobradorId:0,//cobrador
-            reporteId:reporte,//reporte
-    
+            vendedorId: usuario,
+            cobradorId: 0,//cobrador
+            reporteId: reporte,//reporte
+
             esNuevoCliente: true,
-            
+
         });
 
-        
-            handleCloseCreateModal();
-        
+
+        handleCloseCreateModal();
+
 
     };
 
-   
+
     return (
         <div>
 
@@ -435,14 +435,15 @@ console.log(reporte)
                                     <Form.Label>Tipo</Form.Label>
                                     <Form.Select
                                         name="tipo"
-                                        value={newUser.tipo}
-                                        onChange={handleChange}
+                                        value={newUser.tipo} // Este es el valor seleccionado, puedes adaptarlo según tu estado
+                                        onChange={handleChange} // Asegúrate de tener la lógica de cambio del valor
                                     >
                                         <option value="">Seleccione el tipo</option>
-                                        <option value="diario">Día</option>
-                                        <option value="semanal">Semana</option>
-                                        <option value="quincenal">Quincena</option>
-                                        <option value="mensual">Mensual</option>
+                                        {tipoCobranza && tipoCobranza.map((tipo, index) => (
+                                            <option key={index} value={tipo}>
+                                                {tipo.charAt(0).toUpperCase() + tipo.slice(1)} {/* Esto es para capitalizar la primera letra */}
+                                            </option>
+                                        ))}
                                     </Form.Select>
                                 </Form.Group>
                             </Col>
@@ -485,7 +486,7 @@ console.log(reporte)
                             <Button variant="secondary" onClick={handleCloseCreateModal}>
                                 Cancelar
                             </Button>
-                            <Button variant="dark" type="submit">
+                            <Button variant="primary" type="submit">
                                 Guardar Cliente
                             </Button>
                         </Modal.Footer>

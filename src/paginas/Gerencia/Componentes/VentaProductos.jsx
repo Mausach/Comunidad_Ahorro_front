@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { gsap } from 'gsap';
-import { Button, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
+import { Alert, Button, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
 import { CargarPrestamo } from '../Helpers/CargarPrestamo';
 import { CargarProductos } from '../Helpers/Cargarroductos';
 import { VentaCardPres } from './Subcomponente/VentaCardPres';
@@ -60,7 +60,7 @@ export const VentaProductos = ({ navigate, usuario }) => {
  const renderContent = () => {
     switch (selectedOption) {
         case 'Prestamos':
-            // Filtrar productos habilitados para préstamos
+            // Filtrar productos habilitados para préstamos y con estado activo
             const productosPrestamos = productos.filter(
                 (producto) => producto.prestamo_bandera === true && producto.estado_producto === true
             );
@@ -74,19 +74,17 @@ export const VentaProductos = ({ navigate, usuario }) => {
                                 (reporte) => reporte.tipo === prestamo.nombre
                             );
 
-                            return (
+                            return prestamo.estado_producto ? (
                                 <Col key={prestamo.id} md={4} sm={6} xs={12}>
-                                    <Card className="h-100">
-                                        <VentaCardPres
-                                            prestamo={prestamo}
-                                            setRefreshData={setRefreshData}
-                                            navigate={navigate}
-                                            usuario={usuario}
-                                            reporte={reporteActual.id} // Pasar el reporte correcto
-                                        />
-                                    </Card>
+                                    <VentaCardPres
+                                        prestamo={prestamo}
+                                        setRefreshData={setRefreshData}
+                                        navigate={navigate}
+                                        usuario={usuario}
+                                        reporte={reporteActual?.id} // Pasar el reporte correcto
+                                    />
                                 </Col>
-                            );
+                            ) : null;
                         })
                     ) : (
                         <Col>
@@ -97,7 +95,9 @@ export const VentaProductos = ({ navigate, usuario }) => {
             );
 
         case 'Planes':
-            const productosPlanes = productos.filter((producto) => !producto.prestamo_bandera);
+            const productosPlanes = productos.filter(
+                (producto) => !producto.prestamo_bandera && producto.estado_producto === true
+            );
 
             return (
                 <Row className="g-3">
@@ -108,19 +108,17 @@ export const VentaProductos = ({ navigate, usuario }) => {
                                 (reporte) => reporte.tipo === prod.nombre
                             );
 
-                            return (
+                            return prod.estado_producto ? (
                                 <Col key={prod.id} md={4} sm={6} xs={12}>
-                                    <Card className="h-100">
-                                        <VentaCardPlan
-                                            producto={prod}
-                                            setRefreshData={setRefreshData}
-                                            navigate={navigate}
-                                            usuario={usuario}
-                                            reporte={reporteActual.id} // Pasar el reporte correcto
-                                        />
-                                    </Card>
+                                    <VentaCardPlan
+                                        producto={prod}
+                                        setRefreshData={setRefreshData}
+                                        navigate={navigate}
+                                        usuario={usuario}
+                                        reporte={reporteActual?.id} // Pasar el reporte correcto
+                                    />
                                 </Col>
-                            );
+                            ) : null;
                         })
                     ) : (
                         <Col>
@@ -132,9 +130,13 @@ export const VentaProductos = ({ navigate, usuario }) => {
 
         default:
             return (
-                <Row>
+                <Row className="d-flex justify-content-center">
                     <Col>
-                        <h1>Por favor, selecciona una opción para empezar.</h1>
+                        <Alert className='rounded-5 text-center' variant="primary">
+                            <h3>
+                                Por favor, selecciona un producto para empezar.
+                            </h3>
+                        </Alert>
                     </Col>
                 </Row>
             );

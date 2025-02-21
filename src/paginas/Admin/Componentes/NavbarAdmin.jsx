@@ -126,7 +126,7 @@ const ir_LogOut = () => {
               </Button>
               <Button
                 className="m-2 rounded-3 custom-dropdown-toggle"
-                variant="outline-danger"
+                variant="outline-light"
                 onClick={ir_LogOut}
               >
                 <i className="bi bi-box-arrow-left"> </i>

@@ -4,6 +4,7 @@ import { starCobroCuotaRendicion } from "../../Helpers/CobroCuota";
 import Swal from "sweetalert2";
 
 const CuotaItem = ({ cuota, index, producto, cliente, setRefreshData, navigate, usuario }) => {
+    console.log(cuota)
     const [activeForm, setActiveForm] = useState(null); // null, "pagar" o "pendiente"
     const [metodoPago, setMetodoPago] = useState("");
     const [montoCobrado, setMontoCobrado] = useState(0);
@@ -37,7 +38,7 @@ const CuotaItem = ({ cuota, index, producto, cliente, setRefreshData, navigate, 
             nombreProd: producto.nombre,
             productId: producto.id,
         };
-        console.log("cuota par abackend", updatedCuota);
+        console.log("cuota para abackend", updatedCuota);
         starCobroCuotaRendicion(updatedCuota, setRefreshData, navigate);
         setActiveForm(null);
         setBotonesOcultos(false);
@@ -127,12 +128,19 @@ const CuotaItem = ({ cuota, index, producto, cliente, setRefreshData, navigate, 
             <div>
                 <p className="mb-1"><strong>Cuota {cuota.numero_cuota}</strong></p>
                 <p className="mb-1"><strong>Monto:</strong> ${cuota.monto_cuota}</p>
-                <p className="mb-1"><strong>Fecha de Pago:</strong> {new Date(cuota.fecha_cobro).toLocaleDateString()}</p>
+                <p className="mb-1"><strong>Fecha de Cobro:</strong> {new Date(cuota.fecha_cobro).toLocaleDateString()}</p>
+
                 <strong>Fecha de Pago:</strong>{" "}
-  {new Date(cuota.fecha_cobro).toLocaleDateString("es-AR", {
-    timeZone: "America/Argentina/Buenos_Aires", // Zona horaria de Argentina (UTC-3)
-  })}
-                <Badge bg={cuota.estado === "pago" ? "success" : cuota.estado === "inpago" ? "warning" : cuota.estado === "no pago" ? "danger" : "secondary"}>
+{cuota.fecha_cobrada ? (
+    new Date(cuota.fecha_cobrada).toLocaleDateString("es-AR", {
+        timeZone: "America/Argentina/Buenos_Aires", // Zona horaria de Argentina (UTC-3)
+    })
+) : (
+    "No cobrada"
+)}
+
+     
+                <Badge bg={cuota.estado === "pago" ? "success" : cuota.estado === "inpago" ? "warning" : cuota.estado === "no pago" ? "danger" : "secondary"} className="m-2"> 
                     {cuota.estado.charAt(0).toUpperCase() + cuota.estado.slice(1)}
                 </Badge>
             </div>

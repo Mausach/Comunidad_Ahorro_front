@@ -52,16 +52,14 @@ export const ModalCrearProducto = ({ showModal, handleCloseModal, setRefreshData
 
 
         // Validar descripción
-        if (!nuevoProducto.descripcion || nuevoProducto.descripcion.trim().length < 8 && !/^[a-zA-Z0-9\s]+$/.test(nuevoProducto.descripcion)) {
-
+        if (!nuevoProducto.descripcion || nuevoProducto.descripcion.trim().length < 8 || nuevoProducto.descripcion.length > 255 || !/^[a-zA-Z0-9\s]+$/.test(nuevoProducto.descripcion)) {
             Swal.fire({
-                icon: 'error',
-                title: 'Descripcion no valida',
-                text: 'La descripción debe tener al menos 8 caracteres y solo puede contener letras, números y espacios.',
+              icon: 'error',
+              title: 'Descripción no válida',
+              text: 'La descripción debe tener al menos 8 caracteres, no superar los 255 caracteres y solo puede contener letras, números y espacios.',
             });
             return;
-
-        }
+          }
 
         // Validar plan si está marcado
         if (nuevoProducto.plan_bandera) {

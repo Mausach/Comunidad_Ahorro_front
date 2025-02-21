@@ -5,7 +5,7 @@ import { starCrearCliente } from '../../Helpers/AltaCliente';
 import { CargarCobradores } from '../../Helpers/CargarCobradores';
 import { starCrearPrestamoCliente } from '../../Helpers/AltaPretamoCliente';
 
-export const ModalPrestamoClienteExist = ({ showExistModal, handleCloseExistModal, setRefreshData, navigate, usuario, reporte, cobradores,prestamoNombre }) => {
+export const ModalPrestamoClienteExist = ({ showExistModal, handleCloseExistModal, setRefreshData, navigate, usuario, reporte, cobradores, prestamoNombre, tipoCobranza }) => {
 
     const [newUser, setNewUser] = useState({ //usaremos user pero es de clientes esto luego se movera
 
@@ -18,7 +18,7 @@ export const ModalPrestamoClienteExist = ({ showExistModal, handleCloseExistModa
         interes_agregado: 0,
         tipo: '',
         cantidad_tipo: 0,
-        
+
 
         //id de quien manda la venta
         vendedorId: usuario,
@@ -26,7 +26,7 @@ export const ModalPrestamoClienteExist = ({ showExistModal, handleCloseExistModa
         reporteId: reporte,//cobrador
 
         esNuevoCliente: false,
-        
+
 
     });
 
@@ -174,14 +174,15 @@ export const ModalPrestamoClienteExist = ({ showExistModal, handleCloseExistModa
                                     <Form.Label>Tipo</Form.Label>
                                     <Form.Select
                                         name="tipo"
-                                        value={newUser.tipo}
-                                        onChange={handleChange}
+                                        value={newUser.tipo} // Este es el valor seleccionado, puedes adaptarlo según tu estado
+                                        onChange={handleChange} // Asegúrate de tener la lógica de cambio del valor
                                     >
                                         <option value="">Seleccione el tipo</option>
-                                        <option value="diario">Día</option>
-                                        <option value="semanal">Semana</option>
-                                        <option value="quincenal">Quincena</option>
-                                        <option value="mensual">Mensual</option>
+                                        {tipoCobranza && tipoCobranza.map((tipo, index) => (
+                                            <option key={index} value={tipo}>
+                                                {tipo.charAt(0).toUpperCase() + tipo.slice(1)} {/* Esto es para capitalizar la primera letra */}
+                                            </option>
+                                        ))}
                                     </Form.Select>
                                 </Form.Group>
                             </Col>
@@ -224,7 +225,7 @@ export const ModalPrestamoClienteExist = ({ showExistModal, handleCloseExistModa
                             <Button variant="secondary" onClick={handleCloseExistModal}>
                                 Cancelar
                             </Button>
-                            <Button variant="dark" type="submit">
+                            <Button variant="primary" type="submit">
                                 Guardar Cliente
                             </Button>
                         </Modal.Footer>

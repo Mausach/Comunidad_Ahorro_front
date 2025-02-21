@@ -74,10 +74,10 @@ export const ListaClientes = ({ clientes, navigate, usuario }) => {
                     {cliente.nombre} {cliente.apellido}
                   </span>
                   <div>
-                    <Button variant="outline-info" onClick={() => handleShowDetailsModal(cliente)} className="me-2">
+                    <Button variant="outline-primary" onClick={() => handleShowDetailsModal(cliente)} className="me-2">
                       <i className="bi bi-eye"></i>
                     </Button>
-                    <Button variant="outline-warning" onClick={() => handleShowCards(cliente)}>
+                    <Button variant="outline-primary" onClick={() => handleShowCards(cliente)}>
                       <i className="bi bi-three-dots"></i>
                     </Button>
                   </div>
@@ -159,7 +159,7 @@ export const ListaClientes = ({ clientes, navigate, usuario }) => {
                             : "secondary"
                     }
                     text="dark"
-                    className="ms-2"
+                    className="m-2"
                   >
                     {producto.estado}
                   </Badge>
@@ -167,50 +167,78 @@ export const ListaClientes = ({ clientes, navigate, usuario }) => {
 
                   {/* Verificar si tiene cuotas antes de acceder */}
                   {producto.cuotas ? (
-                    <>
-                      <p><strong>Total de Cuotas:</strong> {producto.cuotas.length}</p>
-
-                      {/* Acordeón de Cuotas */}
-                      {producto.cuotas ? (
-                        <>
-
-
-                          {/* Acordeón de Cuotas */}
-                          {producto.cuotas.length > 0 ? (
-                            <Accordion>
-                              <Accordion.Item eventKey={producto.id.toString()}>
-                                <Accordion.Header>Ver Cuotas</Accordion.Header>
-                                <Accordion.Body>
-                                  <ListGroup>
-                                    {producto.cuotas
-                                      .sort((a, b) => a.numero_cuota - b.numero_cuota) // Ordenar por número de cuota
-                                      .map((cuota, index) => (
-                                        <CuotaItem
-                                          key={cuota.id}
-                                          cuota={cuota}
-                                          index={index}
-                                          producto={producto}
-                                          cliente={selectedCliente}
-                                          setRefreshData={setRefreshData}
-                                          navigate={navigate}
-                                          usuario={usuario}
-                                        />
-                                      ))}
-                                  </ListGroup>
-                                </Accordion.Body>
-                              </Accordion.Item>
-                            </Accordion>
-                          ) : (
-                            <p className="text-muted">No hay cuotas registradas.</p>
-                          )}
-                        </>
-                      ) : (
-                        <p className="text-muted">Venta directa - No aplica cuotas.</p>
-                      )}
-                    </>
-                  ) : (
-                    <p className="text-muted">Venta directa - No aplica cuotas.</p>
-                  )}
+    <>
+        {/* Acordeón de Cuotas */}
+        {producto.cuotas.filter(cuota => {
+            // Filtra las cuotas según la categoría del producto
+            switch (producto.cat) {
+                case "Préstamo":
+                    return cuota.prestamoId === producto.id;
+                case "Plan":
+                    return cuota.planId === producto.id;
+                case "Venta Permutada":
+                    return cuota.permutadoId === producto.id;
+                default:
+                    return false; // No hay cuotas para otras categorías
+            }
+        }).length > 0 ? ( // Verifica si hay cuotas filtradas
+            <Accordion>
+                <Accordion.Item eventKey={producto.id.toString()}>
+                    <Accordion.Header>
+                        <p><strong>Total de Cuotas:</strong> {
+                            producto.cuotas.filter(cuota => {
+                                switch (producto.cat) {
+                                    case "Préstamo":
+                                        return cuota.prestamoId === producto.id;
+                                    case "Plan":
+                                        return cuota.planId === producto.id;
+                                    case "Venta Permutada":
+                                        return cuota.permutadoId === producto.id;
+                                    default:
+                                        return false;
+                                }
+                            }).length // Muestra el número de cuotas filtradas
+                        }</p>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <ListGroup>
+                            {producto.cuotas
+                                .filter(cuota => {
+                                    switch (producto.cat) {
+                                        case "Préstamo":
+                                            return cuota.prestamoId === producto.id;
+                                        case "Plan":
+                                            return cuota.planId === producto.id;
+                                        case "Venta Permutada":
+                                            return cuota.permutadoId === producto.id;
+                                        default:
+                                            return false;
+                                    }
+                                })
+                                .sort((a, b) => a.numero_cuota - b.numero_cuota) // Ordena por número de cuota
+                                .map((cuota, index) => (
+                                    <CuotaItem
+                                        key={cuota.id}
+                                        cuota={cuota}
+                                        index={index}
+                                        producto={producto}
+                                        cliente={selectedCliente}
+                                        setRefreshData={setRefreshData}
+                                        navigate={navigate}
+                                        usuario={usuario}
+                                    />
+                                ))}
+                        </ListGroup>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
+        ) : (
+            <p className="text-muted">No hay cuotas registradas.</p>
+        )}
+    </>
+) : (
+    <p className="text-muted">Venta directa - No aplica cuotas.</p>
+)}
                 </Card.Body>
               </Card>
             ))}

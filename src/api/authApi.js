@@ -1,9 +1,10 @@
 import axios from "axios";
 //http://localhost:4005
 //https://as-sumadre.onrender.com
+//https://comunidad-ahorro-backend.onrender.com
 
 export const authApi=axios.create({
-    baseURL: "http://192.168.0.3:4005",   
+    baseURL: "https://comunidad-ahorro-backend.onrender.com",   
 });
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Accordion, Badge, ListGroup } from 'react-bootstrap';
+import { Card, Accordion, Badge, ListGroup, Alert } from 'react-bootstrap';
 
 const CardCuotaPactada = ({ pactadas }) => {
   if (!pactadas || pactadas.length === 0) {
@@ -68,7 +68,13 @@ const CardCuotaPactada = ({ pactadas }) => {
                   </Accordion.Item>
                 </Accordion>
               ) : (
-                <p className="text-muted">No hay cuotas pagas.</p>
+               
+                <Alert className='rounded-5 text-center' variant="warning">
+                <h5>
+                No hay cuotas pagas..
+                </h5>
+                 
+                 </Alert>
               )}
             </Card.Body>
           </Card>

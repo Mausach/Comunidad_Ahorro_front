@@ -156,7 +156,10 @@ export const VentaCardPlan = ({ producto, setRefreshData, navigate, usuario, rep
 
     return (
         <div>
-            <Card>
+            <Card className='shadow-lg  rounded-5'
+             border="light"
+             style={{ width: '23rem', height: '27rem', overflow: 'auto' }}
+            >
                 <Card.Header as="h5">Producto</Card.Header>
                 <Card.Body>
                     <Card.Title>
@@ -165,50 +168,47 @@ export const VentaCardPlan = ({ producto, setRefreshData, navigate, usuario, rep
                     <Card.Text>
                         <strong>Descripcion :</strong> {descripcion}
                     </Card.Text>
-                    <Card.Text>
-                        <strong>Monto Prestado:</strong> ${monto_max_prestar}
-                    </Card.Text>
+                    
 
 
                     <Card.Text>
-                        <strong>Tipo:</strong> {tipo_cobranza_prestamo}
+                        <strong>Tipo: </strong> Mensual
                     </Card.Text>
 
 
 
                     {/* Posicionar el botón a la derecha */}
-                    <div className="d-flex justify-content-between align-items-center">
+                    <div className="d-flex flex-wrap justify-content-between align-items-center">
+    {/* Botones de venta según las banderas */}
+    <div className="d-flex flex-column gap-2">
+    {venta_directa_bandera && (
+        <Button variant="primary" onClick={handleRealizarVentaDirecta}>
+            Venta Directa
+        </Button>
+    )}
+    {venta_permutada_bandera && (
+        <Button variant="secondary" onClick={handleRealizarVentaPermutada}>
+            Venta Permutada
+        </Button>
+    )}
+    {servicio_bandera && (
+        <Button variant="success" onClick={handleShowVentaServicioModal}>
+            Venta de Servicios
+        </Button>
+    )}
+    {accesorio_bandera && (
+        <Button variant="warning" onClick={handleShowVentaAccesorioModal}>
+            Venta de Accesorios
+        </Button>
+    )}
 
-                        {/* Botones de venta según las banderas */}
-                        <div className="d-flex flex-wrap gap-2">
-                            {venta_directa_bandera && (
-                                <Button variant="primary" onClick={handleRealizarVentaDirecta}>
-                                    Venta Directa
-                                </Button>
-                            )}
-                            {venta_permutada_bandera && (
-                                <Button variant="secondary" onClick={handleRealizarVentaPermutada}>
-                                    Venta Permutada
-                                </Button>
-                            )}
-                            {servicio_bandera && (
-                                <Button variant="success" onClick={handleShowVentaServicioModal}>
-                                    Venta de Servicios
-                                </Button>
-                            )}
-                            {accesorio_bandera && (
-                                <Button variant="warning" onClick={handleShowVentaAccesorioModal}>
-                                    Venta de Accesorios
-                                </Button>
-                            )}
-                        </div>
-
-                        {/* Botón para realizar préstamo */}
-
-
-                        <span></span>
-                        <Button variant="primary" onClick={handleRealizarPrestamo}>Realizar prestamo</Button>
-                    </div>
+    {/* Botón para realizar préstamo */}
+    <Button variant="primary" onClick={handleRealizarPrestamo}>
+        Realizar plan
+    </Button>
+</div>
+   
+</div>
                 </Card.Body>
             </Card>
 

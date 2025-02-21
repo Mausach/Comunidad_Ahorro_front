@@ -117,7 +117,7 @@ export const ModalPlanClienteExist = ({ showExistModal, handleCloseExistModal, s
         <div>
             <Modal show={showExistModal} onHide={handleCloseExistModal} size="lg">
                 <Modal.Header closeButton>
-                    <Modal.Title>Formulario de un Nuevo Prestamo</Modal.Title>
+                    <Modal.Title>Formulario de un Nuevo Plan</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={handleSubmit}>
@@ -241,7 +241,7 @@ export const ModalPlanClienteExist = ({ showExistModal, handleCloseExistModal, s
                             <Button variant="secondary" onClick={handleCloseExistModal}>
                                 Cancelar
                             </Button>
-                            <Button variant="dark" type="submit">
+                            <Button variant="primary" type="submit">
                                 Guardar Cliente
                             </Button>
                         </Modal.Footer>

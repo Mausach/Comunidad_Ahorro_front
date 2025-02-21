@@ -3,6 +3,7 @@ import { CargarCuotasHoy } from "../Helpers/CargarCuotasHoy";
 import { CardCuotasDia } from "./Subcomponente/CardCuotasDia";
 import { CargarCuotasPactadas } from "../Helpers/CargarCuotasPactadas";
 import CardCuotaPactada from "./Subcomponente/CardEntregasPactadas";
+import { Alert } from "react-bootstrap";
 
 const GestNotificaciones = ({navigate}) => {
   const [cuotasHoy, setCuotasHoy] = useState([]);
@@ -23,7 +24,15 @@ const GestNotificaciones = ({navigate}) => {
 {pactadas.length > 0 ? (
         <CardCuotaPactada pactadas={pactadas} />
       ) : (
-        <p className="text-muted">No hay cuotas pactadas disponibles.</p>
+
+        <Alert className='rounded-5 text-center' variant="warning">
+                            <h5>
+                            No hay cuotas pactadas disponibles.
+                            </h5>
+                             
+                             </Alert>
+
+        
       )}
     
     </>

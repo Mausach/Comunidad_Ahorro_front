@@ -56,7 +56,7 @@ export const VentaCardPres = ({ prestamo, setRefreshData, navigate, usuario, rep
 
     return (
         <div>
-            <Card>
+            <Card className='shadow-lg  rounded-5'>
                 <Card.Header as="h5">Prestamo</Card.Header>
                 <Card.Body>
                     <Card.Title>
@@ -71,8 +71,13 @@ export const VentaCardPres = ({ prestamo, setRefreshData, navigate, usuario, rep
 
 
                     <Card.Text>
-                        <strong>Tipo:</strong> {tipo_cobranza_prestamo}
-                    </Card.Text>
+    <strong>Tipo:</strong>
+    <ul>
+        {tipo_cobranza_prestamo.map((tipo, index) => (
+            <li key={index}>{tipo}</li>
+        ))}
+    </ul>
+</Card.Text>
                    
                     {/* Posicionar el botón a la derecha */}
                     <div className="d-flex justify-content-between align-items-center">
@@ -85,12 +90,12 @@ export const VentaCardPres = ({ prestamo, setRefreshData, navigate, usuario, rep
             {/* modal para cliente nuevo */}
             <ModalCrearClientePrestamo showCreateModal={showCreateModal}
              handleCloseCreateModal={handleCloseCreateModal} setRefreshData={setRefreshData}
-              navigate={navigate} usuario={usuario} reporte={reporte} cobradores={cobradores} prestamoNombre={nombre}/>
+              navigate={navigate} usuario={usuario} reporte={reporte} cobradores={cobradores} prestamoNombre={nombre} tipoCobranza={tipo_cobranza_prestamo}/>
 
             {/* modal para cliente existente */}
               <ModalPrestamoClienteExist showExistModal={showExistModal}
              handleCloseExistModal={handleCloseExistModal} setRefreshData={setRefreshData}
-              navigate={navigate} usuario={usuario} reporte={reporte} cobradores={cobradores} prestamoNombre={nombre}/>
+              navigate={navigate} usuario={usuario} reporte={reporte} cobradores={cobradores} prestamoNombre={nombre} tipoCobranza={tipo_cobranza_prestamo}/>
 
 
         </div>

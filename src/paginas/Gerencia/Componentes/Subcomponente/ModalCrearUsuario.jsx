@@ -12,7 +12,7 @@ export const ModalCrearUsuario = ({ showCreateModal, handleCloseCreateModal, set
     apellido: '',
     direccion: '',
     dni: '', //cambiar en el modal a tipo number y ver de parsearlo a string antes de mandarlo al backend para cuil y tel tambn
-    cuil: '',
+    cuil: null,
     email: '',
     numero_telefono: '',
     numero_telefono_2: null,
@@ -187,7 +187,7 @@ export const ModalCrearUsuario = ({ showCreateModal, handleCloseCreateModal, set
       apellido: '',
       direccion: '',
       dni: '',
-      cuil: '',
+      cuil: null,
       email: '',
       numero_telefono: '',
       numero_telefono_2: null,
@@ -337,6 +337,8 @@ export const ModalCrearUsuario = ({ showCreateModal, handleCloseCreateModal, set
                     name="cuil"
                     value={newUser.cuil}
                     onChange={handleChange}
+                    isInvalid={!newUser.cuil} // Muestra error si está vacío
+                    required
                   />
                 </Form.Group>
               </Col>

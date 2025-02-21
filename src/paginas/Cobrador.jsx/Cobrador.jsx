@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { Spinner } from 'react-bootstrap';
-import { NavbarCobrador } from './Componente/NavbarCobrador';
+import NavbarCobrador from './Componente/NavbarCobrador';
+import GestCobranzaDia from './Componente/GestCobranzaDia';
+import { GestCobranza } from '../Gerencia/Componentes/GestCobranza';
 
 
 export const Cobrador = () => {
+
+  const location = useLocation();
+  const usuario = location.state;//recibe el onjeto
+  console.log(usuario) //deberia mostrar solo el id
 
   const [selectedOption, setSelectedOption] = useState(''); // Estado para la opción seleccionada
   const [loading, setLoading] = useState(false); // Estado para manejar el cargando
@@ -36,37 +42,44 @@ export const Cobrador = () => {
 
   // Renderizar contenido según la opción seleccionada
   const renderContent = () => {
-    switch (selectedOption) {
-      case 'Realizar cobro':
-        return <div className="content">Contenido para realizar un cobro</div>;
-      case 'Reportes':
-        return <div className="content">Reportes de Rendicion</div>;
-        case 'Notificaciones':
-            return <div className="content">Notificaciones</div>;  
+    switch (selectedOption) { //las rutas estaran traidas de gerencia , esto debe cambiarse luego
+case 'Realizar cobro':
+        return <div className="content">
+          <GestCobranza navigate={navigate} usuario={usuario}/>
+        </div>;
+
+      case 'Notificaciones':
+        return <div className="content">
+          <GestCobranzaDia navigate={navigate} usuario={usuario}/>
+        </div>;
+
+
       default:
-        return <div className="content">Selecciona una opción del menú</div>;
+        return <div className="content">
+          <GestCobranzaDia navigate={navigate} usuario={usuario}/>
+        </div>;
     }
   };
 
   return (
     <div>
-    {/* Navbar pasa la función que actualiza la opción seleccionada */}
-    <NavbarCobrador onSelect={handleSelection} />
+      {/* Navbar pasa la función que actualiza la opción seleccionada */}
+      <NavbarCobrador onSelect={handleSelection} usuario={usuario} />
 
-    {/* Mostrar animación de "cargando" o el contenido */}
-    {loading ? (
-      <div className="loading">
-        <h2 className='d-flex justify-content-center align-items-center min-vh-100'>
-          <Spinner animation="grow" variant="dark" />
+      {/* Mostrar animación de "cargando" o el contenido */}
+      {loading ? (
+        <div className="loading">
+          <h2 className='d-flex justify-content-center align-items-center min-vh-100'>
+            <Spinner animation="grow" variant="dark" />
           </h2>
-        {/* Animación con GSAP */}
-        <div className="spinner"></div>
-      </div>
-    ) : (
-      renderContent()
-    )}
+          {/* Animación con GSAP */}
+          <div className="spinner"></div>
+        </div>
+      ) : (
+        renderContent()
+      )}
 
-    
-  </div>
-  )
+
+    </div>
+  );
 }

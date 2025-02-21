@@ -1,26 +1,56 @@
 import React from 'react';
 import { Row, Col, Card, Button, Accordion, Alert } from 'react-bootstrap';
+import { confirmarRendicion } from '../../Helpers/ConfirmarRendicion';
 
 const RendicionList = ({ rendiciones, setRefreshData, navigate }) => {
-  const handleEdit = (rendicion) => {
-    console.log("Editando rendición", rendicion);
-  };
 
-  const handleDelete = (id) => {
-    console.log("Eliminando rendición con ID:", id);
-  };
+  const handleEdit = (rendicion) => {
+    console.log("Rendición seleccionada:", rendicion);
+    
+    confirmarRendicion(rendicion.id,setRefreshData, navigate);
+};
+
+ // Filtrar solo las rendiciones pendientes
+ const rendicionesPendientes = rendiciones.filter(rendicion => !rendicion.estado);
+
+  // Función para formatear la fecha en formato argentino
+  const formatFechaArgentina = (fecha) => {
+    if (!fecha) return "No disponible";
+
+    const options = {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+    };
+
+    return new Date(fecha).toLocaleDateString('es-AR', options);
+};
+
 
   return (
     <div style={{ overflowX: 'auto', padding: '10px' }}>
-      <Row className="d-flex justify-content-center">
-        {rendiciones.map((rendicion) => (
-          <Col key={rendicion.id} xs={12} className="mb-4"> 
-            <Card style={{ width: '95%', maxWidth: '900px', margin: 'auto', boxShadow: '0px 4px 10px rgba(0,0,0,0.2)' }} className="shadow-lg rounded-5">
+    <Row className="d-flex justify-content-center">
+      {rendicionesPendientes.length > 0 ? (
+        rendicionesPendientes.map((rendicion) => (
+          <Col key={rendicion.id} xs={12} className="mb-4">
+            <Card
+              style={{
+                width: '95%',
+                maxWidth: '900px',
+                margin: 'auto',
+                boxShadow: '0px 4px 10px rgba(0,0,0,0.2)',
+              }}
+              className="shadow-lg rounded-5"
+            >
               <Card.Body>
-                <Card.Title> Rendición de {rendicion.cobrador.nombres} {rendicion.cobrador.apellido}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">Monto a Rendir: ${rendicion.monto_rendir}</Card.Subtitle>
+                <Card.Title>
+                  Rendición de {rendicion.cobrador.nombres} {rendicion.cobrador.apellido}
+                </Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  Monto a Rendir: ${rendicion.monto_rendir}
+                </Card.Subtitle>
                 <Card.Text>
-                  <strong>Estado:</strong> {rendicion.estado ? 'Completado ✅' : 'Pendiente ⏳'}
+                  <strong>Estado:</strong> Pendiente ⏳
                 </Card.Text>
 
                 {/* Acordeón para los detalles de las cuotas */}
@@ -32,15 +62,13 @@ const RendicionList = ({ rendiciones, setRefreshData, navigate }) => {
                         <ul className="list-group">
                           {rendicion.datos_de_cuotas.map((cuota, idx) => (
                             <li key={idx} className="list-group-item">
-                              <strong>Cuota #{cuota.numero_cuota}:</strong> ${cuota.monto}  
+                              <strong>Cuota #{cuota.numero_cuota}:</strong> ${cuota.monto}
                               <br />
                               <strong>Cliente:</strong> {cuota.cliente}
                               <br />
                               <strong>Método de pago:</strong> {cuota.metodo_pago}
                               <br />
                               <strong>Categoría:</strong> {cuota.categoria}
-                              <br />
-                              <strong>Fecha:</strong> {cuota.fecha ? cuota.fecha : 'No disponible'}
                             </li>
                           ))}
                         </ul>
@@ -51,17 +79,19 @@ const RendicionList = ({ rendiciones, setRefreshData, navigate }) => {
                   </Accordion.Item>
                 </Accordion>
 
-                {/* Botones de acciones */}
-                <Card.Footer className="d-flex justify-content-between mt-3">
-                  <Button variant="primary" onClick={() => handleEdit(rendicion)}>Editar</Button>
-                  <Button variant="danger" onClick={() => handleDelete(rendicion.id)} className="ms-2">Eliminar</Button>
-                </Card.Footer>
+                {/* Botón de acción */}
+                <Button className="mt-2" variant="success" onClick={() => handleEdit(rendicion)}>
+                  Rendido
+                </Button>
               </Card.Body>
             </Card>
           </Col>
-        ))}
-      </Row>
-    </div>
+        ))
+      ) : (
+        <Alert className='rounded-5' variant="info">🎉 No hay rendiciones pendientes.</Alert>
+      )}
+    </Row>
+  </div>
   );
 };
 

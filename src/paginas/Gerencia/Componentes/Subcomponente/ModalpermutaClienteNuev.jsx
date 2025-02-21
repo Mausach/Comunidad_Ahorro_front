@@ -475,7 +475,7 @@ export const ModalPermutaClienteNuevo = ({ showCreateModal, handleCloseCreateMod
                                     <Form.Label>Monto de las cuotas</Form.Label>
                                     <Form.Control
                                         type="number"
-                                        min={1}
+                                        
                                         name="monto_cuota"
                                         value={newUser.monto_cuota}
                                         onChange={handleChange}
@@ -490,7 +490,7 @@ export const ModalPermutaClienteNuevo = ({ showCreateModal, handleCloseCreateMod
                                     <Form.Label>N° Cuotas</Form.Label>
                                     <Form.Control
                                         type="number"
-                                        min={1}
+                                        
                                         name="cant_cuotas_restantes"
                                         value={newUser.cant_cuotas_restantes}
                                         onChange={handleChange}
